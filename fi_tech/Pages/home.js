@@ -82,7 +82,7 @@ const weekPlan = [
 
 const Timeline = ({data, orientation = 0})=>{
     return (
-        <ScrollView showsVerticalScrollIndicator = {false} horizontal = {orientation == 0? false : true} style = {{backgroundColor: "transparent", width: Dimensions.get("screen").width * .9, height: Dimensions.get("screen").height* 2, bottom: 70, }}>
+        <ScrollView scrollEnabled = {false} showsVerticalScrollIndicator = {false} horizontal = {orientation == 0? false : true} style = {{backgroundColor: "transparent", width: Dimensions.get("screen").width * .9, height: Dimensions.get("screen").height* 2, bottom: 70, }}>
             <View style = {[styles.column, {rowGap: 34}]}>
             {
                 data.map(item =>
@@ -108,6 +108,7 @@ const Timeline = ({data, orientation = 0})=>{
             <View style = {{height: 55, width: 10}}></View>
             <View style = {{height: 55, width: 10}}></View>
             <View style = {{height: 55, width: 10}}></View>
+            <View style = {{height: 55, width: 10}}></View>
         </ScrollView>
     )
 
@@ -122,7 +123,7 @@ const DayPlan = ({day}) =>{
             width: Dimensions.get("screen").width,
             height: 150,
             position:"relative",
-            marginTop: 345,
+             
             overflow: "hidden",
             justifyContent:"center",
             alignItems:"center",
@@ -155,19 +156,26 @@ const WeekPlanDisplay = (
 return(
     <>
     <StatusBar barStyle="light-content" backgroundColor="#000" />
-    <SideNav buttonColor={theme? "black": "white"} style = {{top: 62}}/>
+
+    <View style = {[styles.row, {paddingBottom: 43,paddingHorizontal: 15, justifyContent:"center", alignItems:"center", alignContent:"center"}]}>
+    <SideNav buttonColor={theme? "black": "white"} style = {{top: 70, left: 25, marginBottom: 50, position:"relative"}}/>
     <View style = {{backgroundColor: "gray", width: "100%", height: 1, top: -735}}/>
+    <Image source={User} style = {{position: "absolute", height: 34, width: 34, right: 27, top: 64}} />
+    </View>
+   
+    <ScrollView contentContainerStyle = {{ marginTop: -20,alignItems:"center", justifyContent:"flex-start", height: Dimensions.get("screen").height *3}}>
     <DayPlan day = {weekPlan[0]}/>
     <View style = {{marginVertical: 10, backgroundColor:"gray", height: 1, width: Dimensions.get("screen").width}}/>
     {WeekPlanDisplay}
-     <Image source={User} style = {{position: "absolute", height: 34, width: 34, right: 17, top: 64}} />
+    </ScrollView>
+    
     </>    
 )
 }
 
 const styles = StyleSheet.create({
     cont:{
-        backgroundColor: "white",
+   
         height: "100%",
         width:"200%"
     },

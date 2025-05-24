@@ -10,52 +10,89 @@ import Home from './Pages/home.js';
 import Settings from './Pages/Settings.js';
 import SideNav from './components/sideNav.js';
 import Shop from './Pages/shop.js';
-export default function App() {
- const navState = useSelector(selectNavigation); 
- 
-  let currentRoute = store.getState().nav.value.routes[store.getState().nav.value.currentRoute];
- let id = currentRoute.id;
- let background_color = currentRoute.style.backColor; 
- let uiColor = currentRoute.style.uiColor; 
 
+import {NavigationContainer} from "@react-navigation/native"; 
+import { createStaticNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Advice from './Pages/advice.js';
+
+const Stack = createNativeStackNavigator();
+const colorScheme = {
+  sixty: "rgba(29, 29, 29, 0.75)",
+  thirty: "rgba(255, 255, 255,1)",
+  ten: "rgba(252, 255,255, 1)"
+}
+
+console.log("reading json file: ")
+const fileRead = new FileReader();
+fileRead.readAsDataURL("../componen")
+
+function App() {
   return (
-    <SafeAreaView style = {[styles.container, {backgroundColor: background_color}]}>
-      {
-        id == 0?
-        <Intro/>
-        :
-        id == 1?
-        <AuthScreen/>
-        :
-        id == 2?
-        <>
-        <Home theme = {uiColor}/>
-        </>
-        :
-        id == 3?
-        <>
-        <Settings theme = {uiColor}/>
-        </>
-    
-        :
-        id == 4?
-        <>
-        <Shop theme = {uiColor}/>
-        </>
-    
-        :
-        <View><Text>No ROute found</Text></View>
-      }
-  
-      </SafeAreaView>
+    <NavigationContainer>
+      <View style = {{flex: 1, paddingTop: 0}}>
+      <Stack.Navigator 
+      
+        screenOptions={{
+          animation:"none",
+          headerShown: false,
+          contentStyle: {
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: colorScheme.ten
+          },
+          
+        }}
+        initialRouteName="I_ntro"
+      >
+        <Stack.Screen name="I_ntro" component={Intro}  />
+        <Stack.Screen name="Auth" component={AuthScreen} />
+        <Stack.Screen 
+          name="H_ome" 
+          component={Home}
+          options={{
+            contentStyle: {
+              backgroundColor: colorScheme.sixty,
+              alignItems: "center",
+              justifyContent: "flex-start"
+            }
+          }}
+        />
+
+
+          <Stack.Screen 
+          name="Advice" 
+          component={Advice}
+          options={{
+            contentStyle: {
+              backgroundColor: colorScheme.ten,
+              alignItems: "center",
+              justifyContent: "flex-start"
+            }
+          }}
+        />
+        <Stack.Screen name="S_ettings" component={Settings} />
+
+        <Stack.Screen 
+        name="S_hop" 
+        component={Shop} 
+        options ={{
+          contentStyle:{
+            backgroundColor: colorScheme.sixty
+          }
+        }}/>
+      </Stack.Navigator>
+      </View>
+    </NavigationContainer>
   );
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    
   },
 });
