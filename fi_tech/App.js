@@ -16,6 +16,36 @@ import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Advice from './Pages/advice.js';
 
+//mediapip api: 
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import "@tensorflow/tfjs-core"; 
+import "@tensorflow/tfjs-backend-webgl"; 
+import "@mediapipe/pose"; 
+
+import profile1 from "./assets/profile1.png"; 
+import AICam from './Pages/aiCam.js';
+
+const model = poseDetection.SupportedModels.BlazePose; 
+const detector_config = {
+  runtime: "mediapipe",
+  solutionpath: "https://cdn.jsdelivr.net/npm/@mediapipe/pose"
+}
+
+const getDetector = async () => await poseDetection.createDetector(model, detector_config);
+const est_config = {enableSmoothing: true};
+
+const getPoses = async(frame)=>{
+  let detector = getDetector();
+
+  let p = (await detector).estimatePoses(frame, est_config);
+  return p; 
+}
+ 
+
+//console.log("Reading", getPoses(profile1)); 
+
+
+
 const Stack = createNativeStackNavigator();
 const colorScheme = {
   sixty: "rgba(29, 29, 29, 0.75)",
@@ -23,9 +53,7 @@ const colorScheme = {
   ten: "rgba(252, 255,255, 1)"
 }
 
-console.log("reading json file: ")
-const fileRead = new FileReader();
-fileRead.readAsDataURL("../componen")
+
 
 function App() {
   return (
@@ -45,7 +73,7 @@ function App() {
         }}
         initialRouteName="I_ntro"
       >
-        <Stack.Screen name="I_ntro" component={Intro}  />
+        <Stack.Screen name="I_ntro" component={AICam}  />
         <Stack.Screen name="Auth" component={AuthScreen} />
         <Stack.Screen 
           name="H_ome" 
