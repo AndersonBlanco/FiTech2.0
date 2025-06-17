@@ -1,7 +1,7 @@
 import { Image, StyleSheet, View, TouchableOpacity, Text, TextInput, Dimensions, ImageBackground} from "react-native"; 
 import { Icon } from "react-native-elements";
 import {useState} from "react"; 
-import { SafeAreaView } from "react-native-safe-area-context";
+//import { SafeAreaView } from "react-native-safe-area-context";
 import SideNav from "../components/sideNav";
 import pros from "../components/dummyPros.json"; 
 import { FlatList } from "react-native-gesture-handler";
